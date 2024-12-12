@@ -35,126 +35,108 @@ Publish the website in the given URL.
 ```
 math.html
 
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>AREA OF SQUARE PRISM</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamp Power Calculator</title>
+    <style>
         body {
-            background-color:rgb(87, 86, 34)
-        }
-
-        .edge {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
             display: flex;
-            height: 100vh;
-            width: 100%;    
             justify-content: center;
             align-items: center;
-        }
-
-        .box {
-            display: block;
-            width: 500px;
-            min-height: 300px;
-            font-size: 20px;
-            background: rgb(185, 167, 29);
-            background: linear-gradient(90deg, rgb(167, 156, 76) 9%, rgb(133, 119, 19) 56%);
-            border-radius: 10px;
-            box-shadow: rgba(151, 224, 4, 0.35) 0px 5px 15px;
-        }
-
-        .formelt {
-            color: rgb(224, 240, 8);
-            text-align: center;
-            margin-top: 7px;
-            margin-bottom: 6px;
+            height: 100vh;
         }
 
         h1 {
-            color: rgb(29, 6, 6);
-            text-align: center;
-            padding-top: 20px;
+            color: #2c3e50;
         }
-        input{
-            margin: 5px;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
 
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
         }
     </style>
+    <script>
+        function calculatePower() {
+            var I = parseFloat(document.getElementById("current").value);
+            var R = parseFloat(document.getElementById("resistance").value);
+            if (isNaN(I) || isNaN(R)) {
+                document.getElementById("result").innerHTML = "Please enter valid numbers for current and resistance.";
+                return;
+            }
+            var P = Math.pow(I, 2) * R;
+            document.getElementById("result").innerHTML = "Power (P) = " + P.toFixed(4) + " Watts";
+        }
+    </script>
 </head>
-
 <body>
-    <div class="edge">
-        <div class="box">
-            <h1>AREA OF SQUARE PRISM</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="formelt">
-                    Side : <input type="text" name="length" value="{{l}}"></input>(in m)<br />
-                </div>
-                <div class="formelt">
-                    Height : <input type="text" name="breadth" value="{{b}}"></input>(in m)<br />
-                </div>
-                <div class="formelt">
-                    <input type="submit" value="Calculate"></input><br />
-                </div>
-                <div class="formelt">
-                    Area : <input type="text" name="area" value="{{area}}"></input>m<sup>2</sup><br />
-                </div>
-            </form>
-        </div>
+    <div class="container">
+        <h1>Lamp Power Calculator</h1>
+        <label for="current">Current (I) in Amps:</label>
+        <input type="number" id="current" step="any">
+        <label for="resistance">Resistance (R) in Ohms:</label>
+        <input type="number" id="resistance" step="any">
+        <button onclick="calculatePower()">Calculate Power</button>
+        <div id="result"></div>
     </div>
 </body>
-
 </html>
-
-views.py
-from django.shortcuts import render
-
-def rectarea(request):
-    context={}
-    context['area'] = "0"
-    context['l'] = "0"
-    context['b'] = "0"
-    if request.method == 'POST':
-        print("POST method is used")
-        l = request.POST.get('length','0')
-        b = request.POST.get('breadth','0')
-        print('request=',request)
-        print('Length=',l)
-        print('Breadth=',b)
-        area = 2*(int(l)**2) + 4*int(l)*int(b)
-        context['area'] = area
-        context['l'] = l
-        context['b'] = b
-        print('Area=',area)
-    return render(request,'mathapp/math.html',context)
-
-urls.py
-
-from django.contrib import admin
-from django.urls import path
-from mathapp import views
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('areaofrectangle/',views.rectarea,name="areaofrectangle"),
-    path('',views.rectarea,name="areaofrectangleroot")
-]
-
 ```
 
 
 ## SERVER SIDE PROCESSING:
-
-![alt text](<Screenshot 2024-12-06 011018.png>)
+![alt text](image.png)
 
 ## HOMEPAGE:
-![alt text](<Screenshot 2024-12-06 011119.png>)
+![alt text](image-1.png)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
