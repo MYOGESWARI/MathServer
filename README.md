@@ -33,110 +33,90 @@ Publish the website in the given URL.
 
 ## PROGRAM :
 ```
-math.html
+<html>
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lamp Power Calculator</title>
-    <style>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>POWER OF LAMP IN INCANDESCENT BULD</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style type="text/css">
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
+            background-color:white;
+        }
+
+        .edge {
             display: flex;
+            height: 100vh;
+            width: 100%;    
             justify-content: center;
             align-items: center;
-            height: 100vh;
+        }
+
+        .box {
+            display: block;
+            width: 500px;
+            min-height: 300px;
+            font-size: 20px;
+            background: rgb(21, 208, 215);
+            background: linear-gradient(90deg, rgb(99, 237, 118) 9%, rgb(193, 166, 202) 56%);
+            border-radius: 10px;
+            box-shadow: rgba(239, 5, 24, 0.35) 0px 5px 15px;
+        }
+
+        .formelt {
+            color: whitesmoke;
+            text-align: center;
+            margin-top: 7px;
+            margin-bottom: 6px;
         }
 
         h1 {
-            color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding-top: 20px;
         }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+        input{
+            margin: 5px;
+            padding: 5px;
             border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #3498db;
-            color: #fff;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
 
-        button:hover {
-            background-color: #2980b9;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #27ae60;
-            font-weight: bold;
-        }
-
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
         }
     </style>
-    <script>
-        function calculatePower() {
-            var I = parseFloat(document.getElementById("current").value);
-            var R = parseFloat(document.getElementById("resistance").value);
-            if (isNaN(I) || isNaN(R)) {
-                document.getElementById("result").innerHTML = "Please enter valid numbers for current and resistance.";
-                return;
-            }
-            var P = Math.pow(I, 2) * R;
-            document.getElementById("result").innerHTML = "Power (P) = " + P.toFixed(4) + " Watts";
-        }
-    </script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Lamp Power Calculator</h1>
-        <label for="current">Current (I) in Amps:</label>
-        <input type="number" id="current" step="any">
-        <label for="resistance">Resistance (R) in Ohms:</label>
-        <input type="number" id="resistance" step="any">
-        <button onclick="calculatePower()">Calculate Power</button>
-        <div id="result"></div>
+    <div class="edge">
+        <div class="box">
+            <h1>POWER OF LAMP IN INCANDESCENT BULB</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="formelt">
+                    INTENSITY : <input type="text" name="Intensity" value="{{I}}"></input>(in A)<br />
+                </div>
+                <div class="formelt">
+                    RESISITANCE : <input type="text" name="Resistence" value="{{R}}"></input>(in Ω)<br />
+                </div>
+                <div class="formelt">
+                    <input type="submit" value="Calculate"></input><br />
+                </div>
+                <div class="formelt">
+                    POWER : <input type="text" name="Power" value="{{Power}}"></input>W<br />
+                </div>
+            </form>
+        </div>
     </div>
 </body>
+
 </html>
+
 ```
 
 
 ## SERVER SIDE PROCESSING:
 ![alt text](image.png)
-
 ## HOMEPAGE:
 ![alt text](image-1.png)
-
 ## RESULT:
 The program for performing server side processing is completed successfully.
