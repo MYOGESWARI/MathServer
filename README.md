@@ -38,7 +38,7 @@ Publish the website in the given URL.
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>POWER OF LAMP IN INCANDESCENT BULD</title>
+    <title>Lamp Power Calculator</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <style type="text/css">
         body {
@@ -89,20 +89,20 @@ Publish the website in the given URL.
 <body>
     <div class="edge">
         <div class="box">
-            <h1>POWER OF LAMP IN INCANDESCENT BULB</h1>
+            <h1>Lamp Power Calculator</h1>
             <form method="POST">
                 {% csrf_token %}
                 <div class="formelt">
-                    INTENSITY : <input type="text" name="Intensity" value="{{I}}"></input>(in A)<br />
+                    Current : <input type="text" name="Current" value="{{I}}"></input>(in A)<br />
                 </div>
                 <div class="formelt">
-                    RESISITANCE : <input type="text" name="Resistence" value="{{R}}"></input>(in Ω)<br />
+                    Resistance : <input type="text" name="Resistance" value="{{R}}"></input>(in Ω)<br />
                 </div>
                 <div class="formelt">
                     <input type="submit" value="Calculate"></input><br />
                 </div>
                 <div class="formelt">
-                    POWER : <input type="text" name="Power" value="{{Power}}"></input>W<br />
+                    Power : <input type="text" name="Power" value="{{Power}}"></input>W<br />
                 </div>
             </form>
         </div>
@@ -110,6 +110,40 @@ Publish the website in the given URL.
 </body>
 
 </html>
+
+views.py
+
+from django.shortcuts import render
+
+def powerlamp(request):
+    context={}
+    context['Power'] = ""
+    context['I'] = ""
+    context['R'] = ""
+    if request.method == 'POST':
+        print("POST method is used")
+        I = request.POST.get('Current','')
+        R = request.POST.get('Resistence','')
+        print('request=',request)
+        print('Current=',I)
+        print('Resistence=',R)
+        Power = int(I) * int(I) * int(R)
+        context['Power'] = Power
+        context['I'] = I
+        context['R'] = R
+        print('Power=',Power)
+    return render(request,'side/calci.html',context)
+
+
+urls.py
+
+from django.contrib import admin
+from django.urls import path
+from side import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Lamp Power Calculator/',views.powerlamp,name="Lamp Power Calculator"),
+    path('',views.powerlamp,name="Lamp Power Calculator"),]
 
 ```
 

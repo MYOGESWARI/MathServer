@@ -3,6 +3,6 @@ from django.urls import path
 from side import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('PowerOfLampFilamentInAnIncandescentBulb/',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
-    path('',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
+    path('Lamp Power Calculator/',views.powerlamp,name="Lamp Power Calculator"),
+    path('',views.powerlamp,name="Lamp Power Calculator"),
 ]

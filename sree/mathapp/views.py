@@ -7,10 +7,10 @@ def powerlamp(request):
     context['R'] = ""
     if request.method == 'POST':
         print("POST method is used")
-        I = request.POST.get('Intensity','')
+        I = request.POST.get('Current','')
         R = request.POST.get('Resistence','')
         print('request=',request)
-        print('Intensity=',I)
+        print('Current=',I)
         print('Resistence=',R)
         Power = int(I) * int(I) * int(R)
         context['Power'] = Power
