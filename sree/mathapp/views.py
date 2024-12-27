@@ -1,3 +1,5 @@
+views.py
+
 from django.shortcuts import render
 
 def powerlamp(request):
@@ -17,4 +19,4 @@ def powerlamp(request):
         context['I'] = I
         context['R'] = R
         print('Power=',Power)
-    return render(request,'side/calci.html',context)
+    return render(request,'mathapp/calci.html',context)
