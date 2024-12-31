@@ -34,123 +34,120 @@ Publish the website in the given URL.
 ## PROGRAM :
 ```
 <html>
-
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Lamp Power Calculator</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style type="text/css">
+    <title>Power Calculator</title>
+    <style>
         body {
-            background-color:white;
-        }
-
-        .edge {
-            display: flex;
-            height: 100vh;
-            width: 100%;    
-            justify-content: center;
-            align-items: center;
-        }
-
-        .box {
-            display: block;
-            width: 500px;
-            min-height: 300px;
-            font-size: 20px;
-            background: rgb(21, 208, 215);
-            background: linear-gradient(90deg, rgb(99, 237, 118) 9%, rgb(193, 166, 202) 56%);
-            border-radius: 10px;
-            box-shadow: rgba(239, 5, 24, 0.35) 0px 5px 15px;
-        }
-
-        .formelt {
-            color: whitesmoke;
+            font-family: Arial, sans-serif;
+            background-color: lightgrey;
+            margin: 20px;
+            padding: 20px;
             text-align: center;
-            margin-top: 7px;
-            margin-bottom: 6px;
         }
 
         h1 {
-            color: white;
-            text-align: center;
-            padding-top: 20px;
+            color: darkblue;
         }
-        input{
-            margin: 5px;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
 
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px grey;
+            display: inline-block;
+            margin: auto;
+        }
+
+        label {
+            font-weight: bold;
+            color: black;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: darkblue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: navy;
         }
     </style>
 </head>
-
 <body>
-    <div class="edge">
-        <div class="box">
-            <h1>Lamp Power Calculator</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="formelt">
-                    Current : <input type="text" name="Current" value="{{I}}"></input>(in A)<br />
-                </div>
-                <div class="formelt">
-                    Resistance : <input type="text" name="Resistance" value="{{R}}"></input>(in Ω)<br />
-                </div>
-                <div class="formelt">
-                    <input type="submit" value="Calculate"></input><br />
-                </div>
-                <div class="formelt">
-                    Power : <input type="text" name="Power" value="{{Power}}"></input>W<br />
-                </div>
-            </form>
-        </div>
-    </div>
+    <h1>Power Calculator</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="I">Enter Current (I in Amps):</label>
+        <input type="number" name="intensity" id="I" value="{{ I }}" required>
+        <br><br>
+        <label for="R">Enter Resistance (R in Ohms):</label>
+        <input type="number" name="resistance" id="R" value="{{ R }}" required>
+        <br><br>
+        <button type="submit">Calculate Power</button>
+        <br><br>
+        <label for="power">Calculated Power (Watts):</label>
+        <input type="number" name="power" id="power" value="{{ power }}" readonly>
+    </form>
 </body>
-
 </html>
 
-views.py
 
-from django.shortcuts import render
+views.py 
 
-def powerlamp(request):
-    context={}
-    context['Power'] = ""
-    context['I'] = ""
-    context['R'] = ""
-    if request.method == 'POST':
+from django.shortcuts import render 
+def powercalc(request): 
+    context={} 
+    context['power'] = "0" 
+    context['I'] = "0" 
+    context['R'] = "0" 
+    if request.method == 'POST': 
         print("POST method is used")
-        I = request.POST.get('Current','')
-        R = request.POST.get('Resistence','')
-        print('request=',request)
-        print('Current=',I)
-        print('Resistence=',R)
-        Power = int(I) * int(I) * int(R)
-        context['Power'] = Power
-        context['I'] = I
-        context['R'] = R
-        print('Power=',Power)
-    return render(request,'side/calci.html',context)
+        I = request.POST.get('intensity','0')
+        R = request.POST.get('resistance','0')
+        print('request=',request) 
+        print('intensity=',I) 
+        print('resistance=',R) 
+        power = (int(I) * int(I) ) * int(R) 
+        context['power'] = power
+        context['intensity'] = I
+        context['resistance'] = R 
+        print('power=',power) 
+    return render(request,'mathapp/math.html',context)
 
 
 urls.py
 
-from django.contrib import admin
-from django.urls import path
-from side import views
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('Lamp Power Calculator/',views.powerlamp,name="Lamp Power Calculator"),
-    path('',views.powerlamp,name="Lamp Power Calculator"),]
+from django.contrib import admin 
+from django.urls import path 
+from mathapp import views 
+urlpatterns = [ 
+    path('admin/', admin.site.urls), 
+    path('powercalculator/',views.powercalc,name="powercalculator"),
+    path('',views.powercalc,name="powercalculatorroot")
+]
+
 
 ```
 
 
 ## SERVER SIDE PROCESSING:
-![alt text](<Screenshot 2024-12-27 081856.png>)
+
+![alt text](<Screenshot 2024-12-31 154920.png>)
+
 ## HOMEPAGE:
-![alt text](<Screenshot 2024-12-12 221758.png>)
+
+![alt text](<Screenshot 2024-12-31 154511.png>)
+
 ## RESULT:
 The program for performing server side processing is completed successfully.
